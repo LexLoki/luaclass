@@ -1,0 +1,2 @@
+# luaclass
+Object-orientation script
