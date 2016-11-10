@@ -12,6 +12,12 @@ local luaclass = {}
 
 local methods = {'class','is_a','superClass','name'}
 
+local function eq(t1,t2)
+  local g1,g2 = rawget(t1,'_lower'),rawget(t2,'_lower')
+  if not g1 and not g2 then return false end
+  return (g1 or t1)==(g2 or t2)
+end
+
 local function getter(table,key,cl,isSuper)
   isSuper = isSuper or false
   local i,s
@@ -89,6 +95,7 @@ function luaclass.new(name)
         while t do table = t t = rawget(table,'super') end
         rawset(table,key,value)
       end
+      meta.__eq = eq
     setmetatable(newinst, meta)
     return newinst
   end
@@ -136,6 +143,6 @@ function luaclass.extends(baseClass,name)
   return new_class
 end
 
-setmetatable(luaclass, {__call = class.new})
+setmetatable(luaclass, {__call = function(t,...) return luaclass.new(...) end})
 
 return luaclass
