@@ -134,7 +134,7 @@ function luaclass.new(name)
 end
 
 function luaclass.extends(baseClass,name)
-  local new_class = class.new(name)
+  local new_class = luaclass.new(name)
   if baseClass~=nil then
     setmetatable(new_class,{__index=baseClass})
     function new_class:superClass()
