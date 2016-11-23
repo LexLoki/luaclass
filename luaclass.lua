@@ -7,6 +7,7 @@
 
 -- Script to simulate class, with inheritance and polymorphism, in Lua
 -- Version 2.2
+-- github.com/LexLoki/luaclass
 
 local luaclass = {}
 
@@ -34,11 +35,11 @@ local function getter(table,key,cl,isSuper)
   end
   while inst do
     method = rawget(inst:class(),key)
-    if method then return inst,type(method),method end
+    if method ~= nil then return inst,type(method),method end
     s = rawget(inst,'super')
     if s then
       method = rawget(s,key)
-      if method then return s,type(method),method end
+      if method ~= nil then return s,type(method),method end
     end
     inst = s
   end
